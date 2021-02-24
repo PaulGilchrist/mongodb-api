@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/MongoDB-OData/MongoDB-OData.csproj",
+                "${workspaceFolder}/mongodb-api/mongodb-api.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/MongoDB-OData/MongoDB-OData.csproj",
+                "${workspaceFolder}/mongodb-api/mongodb-api.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -32,7 +32,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/MongoDB-OData/MongoDB-OData.csproj",
+                "${workspaceFolder}/mongodb-api/mongodb-api.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

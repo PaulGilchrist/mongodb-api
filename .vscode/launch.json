@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/MongoDB-OData/bin/Debug/netcoreapp3.1/MongoDB-OData.dll",
+            "program": "${workspaceFolder}/mongodb-api/bin/Debug/netcoreapp3.1/mongodb-api.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/MongoDB-OData",
+            "cwd": "${workspaceFolder}/mongodb-api",
             "stopAtEntry": false,
             // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
             "serverReadyAction": {
