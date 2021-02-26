@@ -1,3 +1,4 @@
+using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +23,9 @@ namespace MongoDbApi {
             services.Configure<Models.DatabaseSettings>(Configuration.GetSection(nameof(MongoDatabaseSettings)));
             services.AddSingleton<IDatabaseSettings>(sp => sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
             services.AddSingleton<ContactService>();
-            services.AddControllers();
+            //services.AddControllers();
+            services.AddOData();
+            services.AddRouting();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,9 +35,11 @@ namespace MongoDbApi {
             }
             app.UseHttpsRedirection();
             app.UseRouting();
-            app.UseAuthorization();
+            // app.UseAuthorization();
             app.UseEndpoints(endpoints => {
-                endpoints.MapControllers();
+                // endpoints.MapControllers();
+                endpoints.Expand().Filter().Count().OrderBy();
+                endpoints.MapODataRoute("odata","odata",AppEdmModel.GetModel());
             });
         }
     }

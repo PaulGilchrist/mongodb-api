@@ -1,57 +1,94 @@
-﻿using MongoDbApi.Models;
-using MongoDbApi.Services;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Query;
+using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using MongoDbApi.Models;
+using MongoDbApi.Services;
 
 namespace MongoDbApi.Controllers {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ContactsController: ControllerBase {
+    [ODataRoutePrefix("contacts")]
+    public class ContactsController: ODataController {
 
         private readonly ContactService _contactService;
-
 
         public ContactsController(ContactService contactService) {
             _contactService = contactService;
         }
 
         [HttpGet]
-        public ActionResult<List<Contact>> Get() {
-            return _contactService.Get();
+        [ODataRoute("")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<Contact>),200)] // Ok
+        [EnableQuery(AllowedQueryOptions=AllowedQueryOptions.Count|AllowedQueryOptions.Filter| AllowedQueryOptions.OrderBy|AllowedQueryOptions.Skip|AllowedQueryOptions.Top,HandleNullPropagation=HandleNullPropagationOption.False)]
+        public IActionResult Get() {
+            /*
+            Working = $count, $filter, $orderBy, $skip, $top
+            Not working = $select, $expand
+            Mongo Team working on fix for $select and $expand
+                https://jira.mongodb.org/browse/CSHARP-1423
+                https://jira.mongodb.org/browse/CSHARP-1771
+                in meantime, remove them from query, then apply, then apply second LINQ re-applying select
+            */
+            return Ok(_contactService.Get());
         }
 
-        [HttpGet("{id:length(24)}",Name = "GetContact")]
-        public ActionResult<Contact> Get(string id) {
-            var contact = _contactService.Get(id);
+        [ODataRoute("({id})")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Contact),200)] // Ok
+        [ProducesResponseType(typeof(void),404)] // Not Found
+        [EnableQuery]
+        public async Task<IActionResult> Get(string id) {
+            // Working = $select
+            // Not working = $expand
+            // Not needed = $count, $filter, $orderBy, $skip, $top
+            return Ok(await _contactService.Get(id));
+        }
+
+        [ODataRoute("")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Contact),201)] // Created
+        [ProducesResponseType(typeof(ModelStateDictionary),400)] // Bad Request
+        [ProducesResponseType(typeof(void),401)] // Unauthorized
+        [ProducesResponseType(typeof(string),409)] // Conflict
+        public async Task<IActionResult> Post([FromBody] Contact contact) {
+            await _contactService.Create(contact);
+            return Ok(contact);
+        }
+
+        [HttpPatch]
+        [ODataRoute("({id})")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(Contact),204)] // Updated
+        [ProducesResponseType(typeof(ModelStateDictionary),400)] // Bad Request
+        [ProducesResponseType(typeof(void),401)] // Unauthorized - User not authenticated
+        [ProducesResponseType(typeof(void),403)] // Forbidden - User does not have required claim roles
+        [ProducesResponseType(typeof(void),404)] // Not Found
+        public async Task<IActionResult> Patch(string id,[FromBody] Delta<Contact> delta) {
+            var contact = await _contactService.Get(id);
             if(contact == null) {
                 return NotFound();
             }
-            return contact;
-        }
-
-        [HttpPost]
-        public ActionResult<Contact> Create(Contact contact) {
-            _contactService.Create(contact);
-            return CreatedAtRoute("GetContact",new { id = contact.Id.ToString() },contact);
-        }
-
-        [HttpPut("{id:length(24)}")]
-        public IActionResult Update(string id,Contact contactIn) {
-            var contact = _contactService.Get(id);
-            if(contact == null) {
-                return NotFound();
-            }
-            _contactService.Update(id,contactIn);
+            delta.Patch(contact);
+            await _contactService.Update(id,contact);
             return NoContent();
         }
 
-        [HttpDelete("{id:length(24)}")]
-        public IActionResult Delete(string id) {
-            var contact = _contactService.Get(id);
+        [HttpDelete]
+        [ODataRoute("({id})")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(void),204)] // No Content
+        [ProducesResponseType(typeof(void),401)] // Unauthorized
+        [ProducesResponseType(typeof(void),404)] // Not Found
+        [ProducesResponseType(typeof(string),409)] // Conflict
+        public async Task<IActionResult> Delete(string id) {
+            var contact = await _contactService.Get(id);
             if(contact == null) {
                 return NotFound();
             }
-            _contactService.Remove(contact.Id);
+            await _contactService.Remove(contact.Id);
             return NoContent();
         }
     }
