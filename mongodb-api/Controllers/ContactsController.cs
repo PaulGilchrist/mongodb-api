@@ -36,6 +36,7 @@ namespace MongoDbApi.Controllers {
             return Ok(_contactService.Get());
         }
 
+        [HttpGet]
         [ODataRoute("({id})")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Contact),200)] // Ok
@@ -48,6 +49,7 @@ namespace MongoDbApi.Controllers {
             return Ok(await _contactService.Get(id));
         }
 
+        [HttpPost]
         [ODataRoute("")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Contact),201)] // Created

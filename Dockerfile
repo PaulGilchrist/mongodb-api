@@ -1,5 +1,7 @@
-# See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 # docker build --rm -f "Dockerfile" -t paulgilchrist/mongodb-api:latest .
+# docker run -d -p 8081:80 paulgilchrist/mongodb-api
+# docker rm -f <containerID>
 # docker push paulgilchrist/mongodb-api
 
 FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
@@ -9,8 +11,8 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
-COPY ["mongodb-api.csproj", "mongodb-api/"]
-RUN dotnet restore "mongodb-api.csproj"
+COPY ["mongodb-api/mongodb-api.csproj", "mongodb-api/"]
+RUN dotnet restore "mongodb-api/mongodb-api.csproj"
 COPY . .
 WORKDIR "/src/mongodb-api"
 RUN dotnet build "mongodb-api.csproj" -c Release -o /app/build

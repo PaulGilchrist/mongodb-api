@@ -5,6 +5,7 @@
     <RootNamespace>mongodb-api</RootNamespace>
     <DockerComposeProjectPath>../docker-compose.dcproj</DockerComposeProjectPath>
     <UserSecretsId>b21ac28b-1e62-48b0-803f-a704fa4409a8</UserSecretsId>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
 
