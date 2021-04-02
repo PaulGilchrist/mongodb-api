@@ -18,6 +18,16 @@ namespace MongoDbApi {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
+            // CORS support
+            services.AddCors(options => {
+                options.AddPolicy("AllOrigins",
+                     builder => {
+                         builder
+                     .AllowAnyOrigin()
+                     .AllowAnyMethod()
+                     .AllowAnyHeader();
+                     });
+            });
             services.AddSingleton<ApplicationSettings>();
             services.AddSingleton<ContactService>();
             //services.AddControllers();
@@ -30,6 +40,7 @@ namespace MongoDbApi {
             if(env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors("AllOrigins");
             app.UseHttpsRedirection();
             app.UseRouting();
             // app.UseAuthorization();

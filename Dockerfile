@@ -1,7 +1,5 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 # docker build --rm -f "Dockerfile" -t paulgilchrist/mongodb-api:latest .
-# docker run -d -p 8081:80 paulgilchrist/mongodb-api
-# docker rm -f <containerID>
 # docker push paulgilchrist/mongodb-api
 
 FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
@@ -24,3 +22,6 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "mongodb-api.dll"]
+
+# docker run -d -p 8081:80 paulgilchrist/mongodb-api
+# docker rm -f <containerID>
