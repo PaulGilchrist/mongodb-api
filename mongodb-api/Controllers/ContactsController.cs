@@ -22,11 +22,12 @@ namespace MongoDbApi.Controllers {
         [ODataRoute("")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Contact>),200)] // Ok
-        [EnableQuery(AllowedQueryOptions=AllowedQueryOptions.Count|AllowedQueryOptions.Filter| AllowedQueryOptions.OrderBy|AllowedQueryOptions.Skip|AllowedQueryOptions.Top,HandleNullPropagation=HandleNullPropagationOption.False)]
+        [EnableQuery(HandleNullPropagation = HandleNullPropagationOption.False)]
+        //[EnableQuery(AllowedQueryOptions=AllowedQueryOptions.Count|AllowedQueryOptions.Filter| AllowedQueryOptions.OrderBy|AllowedQueryOptions.Skip|AllowedQueryOptions.Top,HandleNullPropagation=HandleNullPropagationOption.False)]
         public IActionResult Get() {
             /*
             Working = $count, $filter, $orderBy, $skip, $top
-            Not working = $select, $expand
+            Not working = $select, $expand ($select does work for GetById)
             Mongo Team working on fix for $select and $expand
                 https://jira.mongodb.org/browse/CSHARP-1423
                 https://jira.mongodb.org/browse/CSHARP-1771
@@ -40,7 +41,7 @@ namespace MongoDbApi.Controllers {
         [ProducesResponseType(typeof(Contact),200)] // Ok
         [ProducesResponseType(typeof(void),404)] // Not Found
         [EnableQuery]
-        public async Task<IActionResult> Get(string id) {
+        public async Task<IActionResult> GetById(string id) {
             // Working = $select
             // Not working = $expand
             // Not needed = $count, $filter, $orderBy, $skip, $top
