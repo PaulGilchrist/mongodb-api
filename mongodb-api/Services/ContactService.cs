@@ -7,10 +7,10 @@ namespace MongoDbApi.Services {
     public class ContactService {
         private readonly IMongoCollection<Contact> _contacts;
  
-        public ContactService(IDatabaseSettings settings) {
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.DatabaseName);
-            _contacts = database.GetCollection<Contact>(settings.ContactsCollectionName);
+        public ContactService(ApplicationSettings applicationSettings) {
+            var client = new MongoClient(applicationSettings.ConnectionString);
+            var database = client.GetDatabase(applicationSettings.DatabaseName);
+            _contacts = database.GetCollection<Contact>(applicationSettings.ContactsCollectionName);
         }
 
         public IMongoQueryable<Contact> Get() {
