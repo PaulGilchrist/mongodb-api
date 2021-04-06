@@ -1,4 +1,6 @@
 # https://docs.docker.com/ci-cd/github-actions/
+# GitHub `run-on` currently does not support arm64 which would be required for a docker container to run on a new Mac M1 processor
+
 name: Publish
 on:
   push:
