@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
-using mongodbapi.Classes;
+using MongoDbApi.Classes;
 using MongoDbApi.Models;
 using MongoDbApi.Services;
 

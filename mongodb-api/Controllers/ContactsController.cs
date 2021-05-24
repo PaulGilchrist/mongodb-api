@@ -6,7 +6,7 @@ using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using mongodbapi.Classes;
+using MongoDbApi.Classes;
 using MongoDbApi.Models;
 using MongoDbApi.Services;
 using Newtonsoft.Json;
