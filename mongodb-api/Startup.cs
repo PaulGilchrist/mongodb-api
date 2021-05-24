@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
+using mongodbapi.Classes;
 using MongoDbApi.Models;
 using MongoDbApi.Services;
 
@@ -30,6 +31,7 @@ namespace MongoDbApi {
             });
             services.AddSingleton<ApplicationSettings>();
             services.AddSingleton<ContactService>();
+            services.AddSingleton<Logger>();
             //services.AddControllers();
             services.AddOData();
             services.AddRouting();

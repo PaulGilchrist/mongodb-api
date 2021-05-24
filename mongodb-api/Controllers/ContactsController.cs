@@ -1,21 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using mongodbapi.Classes;
 using MongoDbApi.Models;
 using MongoDbApi.Services;
+using Newtonsoft.Json;
 
 namespace MongoDbApi.Controllers {
     [ODataRoutePrefix("contacts")]
     public class ContactsController: ODataController {
 
         private readonly ContactService _contactService;
+        private readonly Logger _logger;
 
-        public ContactsController(ContactService contactService) {
+        public ContactsController(ContactService contactService, Logger logger) {
             _contactService = contactService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -58,6 +63,8 @@ namespace MongoDbApi.Controllers {
         [ProducesResponseType(typeof(string),409)] // Conflict
         public async Task<IActionResult> Post([FromBody] Contact contact) {
             await _contactService.Create(contact);
+            string message = "{action:\"POST\", \"name\":\"Contact\", {\"value\": " + JsonConvert.SerializeObject(contact) + "}";
+            _logger.Send(message);
             return Ok(contact);
         }
 
@@ -76,6 +83,8 @@ namespace MongoDbApi.Controllers {
             }
             delta.Patch(contact);
             await _contactService.Update(id,contact);
+            string message = "{action:\"PATCH\", \"name\":\"Contact\", {\"value\": " + JsonConvert.SerializeObject(contact) + "}";
+            _logger.Send(message);
             return NoContent();
         }
 
@@ -92,6 +101,8 @@ namespace MongoDbApi.Controllers {
                 return NotFound();
             }
             await _contactService.Remove(contact.Id);
+            string message = "{action:\"DELETE\", \"name\":\"Contact\", {\"value\": " + id + "}";
+            _logger.Send(message);
             return NoContent();
         }
     }

@@ -26,7 +26,8 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ConnectionString": "mongodb://localhost:27017",
         "DatabaseName": "mongotest",
-        "ContactsCollectionName": "contacts"
+        "ContactsCollectionName": "contacts",
+        "QueueHostName": "localhost"
       }
     }
   }
