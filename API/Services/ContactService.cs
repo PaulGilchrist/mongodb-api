@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using MongoDbApi.Models;
+using API.Models;
 
-namespace MongoDbApi.Services {
+namespace API.Services {
     public class ContactService {
         private readonly IMongoCollection<Contact> _contacts;
  

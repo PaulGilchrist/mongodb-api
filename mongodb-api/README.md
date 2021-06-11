@@ -1,2 +1,0 @@
-﻿Requires MongoDB either running on the default port on localhost, or change the project's environment setting to point to another location
-RabbitMQ is optional, but if exists, it should be runing on the default ports on localhost, or change the project's environment setting to point to another location

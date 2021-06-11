@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text;
-using MongoDbApi.Models;
+using API.Models;
 using RabbitMQ.Client;
 
-namespace MongoDbApi.Classes {
+namespace API.Classes {
     public class Logger {
         private readonly ApplicationSettings _applicationSettings;
         private ConnectionFactory _factory = null;

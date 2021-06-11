@@ -1,14 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.809.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2047
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mongodb-api", "mongodb-api\mongodb-api.csproj", "{7CA7BC97-A42B-48C2-8AA0-B2D31481EB76}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7F26A2A7-B56D-4111-9D2D-E4500BADCDEC}"
-	ProjectSection(SolutionItems) = preProject
-		Dockerfile = Dockerfile
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{6F615B38-6840-4DFB-B3B7-4796E6F6C1BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7CA7BC97-A42B-48C2-8AA0-B2D31481EB76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7CA7BC97-A42B-48C2-8AA0-B2D31481EB76}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7CA7BC97-A42B-48C2-8AA0-B2D31481EB76}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7CA7BC97-A42B-48C2-8AA0-B2D31481EB76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F615B38-6840-4DFB-B3B7-4796E6F6C1BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F615B38-6840-4DFB-B3B7-4796E6F6C1BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F615B38-6840-4DFB-B3B7-4796E6F6C1BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F615B38-6840-4DFB-B3B7-4796E6F6C1BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {27CFBE75-516A-4B96-8D6B-82E60D05100B}
+		SolutionGuid = {F2D4F0D8-0E53-4A2D-820F-B63D293D7455}
 	EndGlobalSection
 EndGlobal

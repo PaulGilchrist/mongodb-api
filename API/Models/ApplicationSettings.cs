@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MongoDbApi.Models {
+namespace API.Models {
     public class ApplicationSettings {
         public string ContactsCollectionName { get; set; }
         public string ConnectionString { get; set; }

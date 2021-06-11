@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using API.Classes;
+using API.Models;
+using API.Services;
 using Microsoft.AspNet.OData;
-using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using MongoDbApi.Classes;
-using MongoDbApi.Models;
-using MongoDbApi.Services;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace MongoDbApi.Controllers {
+namespace API.Controllers {
+    [ApiVersion("1.0")]
     [ODataRoutePrefix("contacts")]
     public class ContactsController: ODataController {
 
@@ -27,8 +26,7 @@ namespace MongoDbApi.Controllers {
         [ODataRoute("")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<Contact>),200)] // Ok
-        [EnableQuery(HandleNullPropagation = HandleNullPropagationOption.False)]
-        //[EnableQuery(AllowedQueryOptions=AllowedQueryOptions.Count|AllowedQueryOptions.Filter| AllowedQueryOptions.OrderBy|AllowedQueryOptions.Skip|AllowedQueryOptions.Top,HandleNullPropagation=HandleNullPropagationOption.False)]
+        [EnableQuery]
         public IActionResult Get() {
             /*
             Working = $count, $filter, $orderBy, $skip, $top
