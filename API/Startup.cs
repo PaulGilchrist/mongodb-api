@@ -102,7 +102,7 @@ namespace ODataCoreTemplate {
         /// <param name="modelBuilder">The <see cref="VersionedODataModelBuilder">model builder</see> used to create OData entity data models (EDMs).</param>
         /// <param name="provider">The API version descriptor provider used to enumerate defined API versions.</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHttpContextAccessor httpContextAccessor, VersionedODataModelBuilder modelBuilder, IApiVersionDescriptionProvider provider) {
-            var httpRequestLoggingLevel = Configuration.GetValue<string>("ApplicationInsights:HttpRequestLoggingLevel");
+            app.UseCors("AllOrigins");
             app.UseODataBatching();
             app.UseApiVersioning(); // added to fix issue outlined in https://github.com/OData/WebApi/issues/1754
             app.UseMvc(routes => {
