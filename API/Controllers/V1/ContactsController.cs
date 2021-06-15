@@ -40,12 +40,12 @@ namespace API.Controllers {
         }
 
         [HttpGet]
-        [ODataRoute("({id})")]
+        [ODataRoute("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Contact),200)] // Ok
         [ProducesResponseType(typeof(void),404)] // Not Found
         [EnableQuery]
-        public async Task<IActionResult> GetById(string id) {
+        public async Task<IActionResult> GetById([FromRoute] string id) {
             // Working = $select
             // Not working = $expand
             // Not needed = $count, $filter, $orderBy, $skip, $top
@@ -67,14 +67,14 @@ namespace API.Controllers {
         }
 
         [HttpPatch]
-        [ODataRoute("({id})")]
+        [ODataRoute("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Contact),204)] // Updated
         [ProducesResponseType(typeof(ModelStateDictionary),400)] // Bad Request
         [ProducesResponseType(typeof(void),401)] // Unauthorized - User not authenticated
         [ProducesResponseType(typeof(void),403)] // Forbidden - User does not have required claim roles
         [ProducesResponseType(typeof(void),404)] // Not Found
-        public async Task<IActionResult> Patch(string id,[FromBody] Delta<Contact> delta) {
+        public async Task<IActionResult> Patch([FromRoute] string id,[FromBody] Delta<Contact> delta) {
             var contact = await _contactService.Get(id);
             if(contact == null) {
                 return NotFound();
@@ -87,13 +87,13 @@ namespace API.Controllers {
         }
 
         [HttpDelete]
-        [ODataRoute("({id})")]
+        [ODataRoute("{id}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(void),204)] // No Content
         [ProducesResponseType(typeof(void),401)] // Unauthorized
         [ProducesResponseType(typeof(void),404)] // Not Found
         [ProducesResponseType(typeof(string),409)] // Conflict
-        public async Task<IActionResult> Delete(string id) {
+        public async Task<IActionResult> Delete([FromRoute] string id) {
             var contact = await _contactService.Get(id);
             if(contact == null) {
                 return NotFound();
